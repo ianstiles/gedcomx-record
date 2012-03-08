@@ -1,73 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>gedcomx-parent</artifactId>
   <groupId>org.gedcomx</groupId>
-  <name>GEDCOM X - Parent Project</name>
-  <version>0.13.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <artifactId>gedcomx-record</artifactId>
+  <version>0.12.0-SNAPSHOT</version>
+  <name>GEDCOM X - Record Model</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <gedcomx.core.version>0.12.0.BUILD-SNAPSHOT</gedcomx.core.version>
     <enunciate.version>1.25</enunciate.version>
-    <root.basedir>${project.basedir}</root.basedir>
     <year>${inceptionYear}</year>
   </properties>
 
-  <modules>
-    <module>gedcomx-rt-support</module>
-    <module>gedcomx-test-support</module>
-    <module>enunciate-gedcomx-support</module>
-
-    <module>gedcomx-common</module>
-    <module>gedcomx-metadata</module>
-    <module>gedcomx-record</module>
-    <module>gedcomx-conclusion</module>
-
-    <module>gedcomx-discovery</module>
-    <module>gedcomx-atom</module>
-    <module>gedcomx-conclusion-rs</module>
-  </modules>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>5.14</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.enunciate</groupId>
-      <artifactId>enunciate-core-rt</artifactId>
-      <version>${enunciate.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-jaxrs</artifactId>
-      <version>1.8.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.jackson</groupId>
-      <artifactId>jackson-xc</artifactId>
-      <version>1.8.0</version>
-    </dependency>
-  </dependencies>
-
   <scm>
-    <connection>scm:git:git@github.com:FamilySearch/gedcomx.git</connection>
-    <developerConnection>scm:git:git@github.com:FamilySearch/gedcomx.git</developerConnection>
-    <url>https://github.com/FamilySearch/gedcomx</url>
+    <connection>scm:git:git@github.com:FamilySearch/gedcomx-record.git</connection>
+    <developerConnection>scm:git:git@github.com:FamilySearch/gedcomx-record.git</developerConnection>
+    <url>https://github.com/FamilySearch/gedcomx-record</url>
   </scm>
 
   <build>
-    <resources>
-      <resource>
-        <directory>${basedir}/src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.enunciate</groupId>
+        <artifactId>maven-enunciate-plugin</artifactId>
+        <version>${enunciate.version}</version>
+
+        <executions>
+          <execution>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+            <configuration>
+              <stepTo>build</stepTo>
+              <forceWarPackaging>false</forceWarPackaging>
+            </configuration>
+          </execution>
+        </executions>
+
+
+        <dependencies>
+          <dependency>
+            <groupId>org.gedcomx</groupId>
+            <artifactId>enunciate-gedcomx-support</artifactId>
+            <version>${gedcomx.core.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -135,7 +114,7 @@
         <artifactId>maven-license-plugin</artifactId>
         <version>1.4.0</version>
         <configuration>
-          <header>${root.basedir}/LICENSE-header.txt</header>
+          <header>${basedir}/LICENSE-header.txt</header>
           <includes>
             <include>src/main/java/**</include>
           </includes>
@@ -155,23 +134,6 @@
     </plugins>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.codehaus.enunciate</groupId>
-          <artifactId>maven-enunciate-plugin</artifactId>
-          <version>${enunciate.version}</version>
-
-          <configuration>
-            <configFile>${root.basedir}/enunciate.xml</configFile>
-          </configuration>
-
-          <dependencies>
-            <dependency>
-              <groupId>org.gedcomx</groupId>
-              <artifactId>enunciate-gedcomx-support</artifactId>
-              <version>0.13.0-SNAPSHOT</version>
-            </dependency>
-          </dependencies>
-        </plugin>
         <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
@@ -218,9 +180,47 @@
     </pluginManagement>
   </build>
 
+  <dependencies>
+    <dependency>
+      <groupId>org.gedcomx</groupId>
+      <artifactId>gedcomx-common</artifactId>
+      <version>${gedcomx.core.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.gedcomx</groupId>
+      <artifactId>gedcomx-rt-support</artifactId>
+      <version>${gedcomx.core.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.enunciate</groupId>
+      <artifactId>enunciate-core-rt</artifactId>
+      <version>${enunciate.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-jaxrs</artifactId>
+      <version>1.8.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-xc</artifactId>
+      <version>1.8.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>5.14</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
   <profiles>
     <profile>
-      <!--activate some sugar for the jenkins build instance-->
       <id>jenkins</id>
       <activation>
         <property>
@@ -228,75 +228,73 @@
         </property>
       </activation>
       <build>
-        <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>cobertura-maven-plugin</artifactId>
-              <version>2.5.1</version>
-              <configuration>
-                <formats>
-                  <format>xml</format>
-                  <format>html</format>
-                </formats>
-                <instrumentation>
-                  <ignores>
-                    <ignore>com.*</ignore>
-                    <ignore>net.*</ignore>
-                    <ignore>org.apache.*</ignore>
-                  </ignores>
-                </instrumentation>
-              </configuration>
-              <executions>
-                <execution>
-                  <phase>package</phase>
-                  <goals>
-                    <goal>cobertura</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-pmd-plugin</artifactId>
-              <version>2.5</version>
-              <configuration>
-                <targetJdk>1.6</targetJdk>
-                <formats>
-                  <format>xml</format>
-                  <format>html</format>
-                </formats>
-                <excludes>
-                  <exclude>**/package-info.java</exclude>
-                </excludes>
-              </configuration>
-              <executions>
-                <execution>
-                  <phase>package</phase>
-                  <goals>
-                    <goal>pmd</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-            <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>findbugs-maven-plugin</artifactId>
-              <version>2.4.0</version>
-              <configuration>
-                <findbugsXmlOutput>true</findbugsXmlOutput>
-              </configuration>
-              <executions>
-                <execution>
-                  <phase>package</phase>
-                  <goals>
-                    <goal>findbugs</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-          </plugins>
-        </pluginManagement>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.5.1</version>
+            <configuration>
+              <formats>
+                <format>xml</format>
+                <format>html</format>
+              </formats>
+              <instrumentation>
+                <ignores>
+                  <ignore>com.*</ignore>
+                  <ignore>net.*</ignore>
+                  <ignore>org.apache.*</ignore>
+                </ignores>
+              </instrumentation>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>cobertura</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            <version>2.5</version>
+            <configuration>
+              <targetJdk>1.6</targetJdk>
+              <formats>
+                <format>xml</format>
+                <format>html</format>
+              </formats>
+              <excludes>
+                <exclude>**/package-info.java</exclude>
+              </excludes>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>pmd</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+            <version>2.4.0</version>
+            <configuration>
+              <findbugsXmlOutput>true</findbugsXmlOutput>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>findbugs</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
       <reporting>
         <plugins>
