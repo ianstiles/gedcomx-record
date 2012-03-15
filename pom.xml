@@ -3,12 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.gedcomx</groupId>
   <artifactId>gedcomx-record</artifactId>
-  <version>0.12.0-SNAPSHOT</version>
+  <version>0.13.0-SNAPSHOT</version>
   <name>GEDCOM X - Record Model</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <gedcomx.core.version>0.12.0.BUILD-SNAPSHOT</gedcomx.core.version>
+    <gedcomx.core.version>0.12.0.RELEASE</gedcomx.core.version>
     <enunciate.version>1.25</enunciate.version>
     <year>${inceptionYear}</year>
   </properties>
