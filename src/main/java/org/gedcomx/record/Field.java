@@ -20,9 +20,7 @@ import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.GenealogicalResource;
 import org.gedcomx.common.FormalValue;
 import org.gedcomx.common.ResourceReference;
-import org.gedcomx.rt.CommonModels;
-import org.gedcomx.rt.RDFSubPropertyOf;
-import org.gedcomx.rt.XmlTypeIdResolver;
+import org.gedcomx.rt.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
@@ -130,6 +128,9 @@ public abstract class Field extends GenealogicalResource {
    * @return The source for the field.
    */
   @RDFSubPropertyOf ( CommonModels.DUBLIN_CORE_NAMESPACE + "source")
+  @RDFDomain ({}) //any resource can be identified persistently.
+  @RDFRange ({}) //any resource can be identified as a source.
+  @SuppressWarnings("rdf:no_range")
   public ResourceReference getSource() {
     return source;
   }

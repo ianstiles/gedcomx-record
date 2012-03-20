@@ -20,12 +20,8 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
-import org.gedcomx.common.GenealogicalEntity;
-import org.gedcomx.common.PersistentIdentifiable;
-import org.gedcomx.common.URI;
-import org.gedcomx.rt.CommonModels;
-import org.gedcomx.rt.JsonElementWrapper;
-import org.gedcomx.rt.XmlTypeIdResolver;
+import org.gedcomx.common.*;
+import org.gedcomx.rt.*;
 import org.gedcomx.types.RecordType;
 import org.gedcomx.types.TypeReference;
 
@@ -40,16 +36,86 @@ import java.util.List;
 @JsonElementWrapper ( name = "records" )
 @JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
 @JsonTypeIdResolver (XmlTypeIdResolver.class)
-@XmlType ( name = "Record", propOrder = { "type", "personas", "relationships", "facts" } )
-public class Record extends GenealogicalEntity implements PersistentIdentifiable, HasFacts {
+@XmlType ( name = "Record", propOrder = { "persistentId", "alternateIds", "sources", "type", "personas", "relationships", "facts" } )
+public class Record extends GenealogicalResource implements PersistentIdentifiable, HasFacts {
 
   private String lang;
+  private URI persistentId;
+  private List<AlternateId> alternateIds;
+  private List<ResourceReference> sources;
   @XmlElement (namespace = CommonModels.RDF_NAMESPACE)
   @JsonProperty
   private TypeReference<RecordType> type;
   private List<Persona> personas;
   private List<Fact> facts;
   private List<Relationship> relationships;
+
+  /**
+   * A long-term, persistent, globally unique identifier for this record.
+   *
+   * @return A long-term, persistent, globally unique identifier for this record.
+   */
+  @XmlSchemaType (name = "anyURI", namespace = XMLConstants.W3C_XML_SCHEMA_NS_URI)
+  public URI getPersistentId() {
+    return persistentId;
+  }
+
+  /**
+   * A long-term, persistent, globally unique identifier for this record.
+   *
+   * @param persistentId A long-term, persistent, globally unique identifier for this record.
+   */
+  public void setPersistentId(URI persistentId) {
+    this.persistentId = persistentId;
+  }
+
+  /**
+   * The list of alternate ids of the record.
+   *
+   * @return The list of alternate ids of the record.
+   */
+  @XmlElement (name="alternateId")
+  @JsonProperty ("alternateIds")
+  @JsonName ("alternateIds")
+  public List<AlternateId> getAlternateIds() {
+    return alternateIds;
+  }
+
+  /**
+   * The list of alternate ids of the record.
+   *
+   * @param alternateIds The list of alternate ids of the record.
+   */
+  @JsonProperty ("alternateIds")
+  public void setAlternateIds(List<AlternateId> alternateIds) {
+    this.alternateIds = alternateIds;
+  }
+
+  /**
+   * The source references for a record.
+   *
+   * @return The source references for a record.
+   */
+  @XmlElement (name="source")
+  @JsonProperty ("sources")
+  @JsonName ("sources")
+  @RDFSubPropertyOf ( CommonModels.DUBLIN_CORE_NAMESPACE + "source")
+  @RDFDomain ({}) //any resource can be identified persistently.
+  @RDFRange ({}) //any resource can be identified as a source.
+  @SuppressWarnings("rdf:no_range")
+  public List<ResourceReference> getSources() {
+    return sources;
+  }
+
+  /**
+   * The source references for a record.
+   *
+   * @param sources The source references for a record.
+   */
+  @JsonProperty("sources")
+  public void setSources(List<ResourceReference> sources) {
+    this.sources = sources;
+  }
 
   /**
    * The type of the record.

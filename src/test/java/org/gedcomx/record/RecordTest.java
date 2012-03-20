@@ -185,8 +185,6 @@ public class RecordTest {
     sources.add(sourceReference);
     record.setSources(sources);
 
-    record.setBibliographicCitation("bibliographic citation");
-
     record.setId("rid");
     record.setLang(Locale.ENGLISH.getLanguage());
     return record;
@@ -283,7 +281,6 @@ public class RecordTest {
     assertTrue(persona.getPrincipal());
 
     assertEquals("pal", record.getPersistentId().toString());
-    assertEquals("bibliographic citation", record.getBibliographicCitation());
 
     assertEquals(2, record.getRelationships().size());
     Relationship coupleRelationship = record.getRelationships().get(0);
