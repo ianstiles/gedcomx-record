@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
   @Model (
     id = "gxr",
     namespace = RecordModel.GEDCOMX_RECORD_V1_NAMESPACE,
+    projectId = RecordModel.GEDCOMX_RECORD_PROJECT_ID,
     label = "Record Model",
     description = "The record model contains the objects necessary for modeling genealogical record data.",
     version = "v1",
@@ -39,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class RecordModel {
 
   private RecordModel() {}
+
+  public static final String GEDCOMX_RECORD_PROJECT_ID = "gedcomx-record";
 
   public static final String GEDCOMX_RECORD_V1_NAMESPACE = "http://gedcomx.org/record/v1/";
   public static final String GEDCOMX_RECORD_V1_XML_MEDIA_TYPE = "application/x-gedcom-record-v1+xml";
