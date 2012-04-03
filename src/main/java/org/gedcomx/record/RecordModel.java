@@ -43,7 +43,7 @@ public class RecordModel {
 
   public static final String GEDCOMX_RECORD_PROJECT_ID = "gedcomx-record";
 
-  public static final String GEDCOMX_RECORD_V1_NAMESPACE = "http://gedcomx.org/record/v1/";
+  public static final String GEDCOMX_RECORD_V1_NAMESPACE = "http://record.gedcomx.org/v1/";
   public static final String GEDCOMX_RECORD_V1_XML_MEDIA_TYPE = "application/x-gedcom-record-v1+xml";
   public static final String GEDCOMX_RECORD_V1_JSON_MEDIA_TYPE = "application/x-gedcom-record-v1+json";
 
