@@ -8,7 +8,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <gedcomx.core.version>0.14.0-SNAPSHOT</gedcomx.core.version>
+    <gedcomx.core.version>0.15.0</gedcomx.core.version>
     <enunciate.version>1.25</enunciate.version>
     <year>${inceptionYear}</year>
   </properties>
