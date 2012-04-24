@@ -180,8 +180,6 @@ public class RecordTest {
     ArrayList<ResourceReference> sources = new ArrayList<ResourceReference>();
     ResourceReference sourceReference = new ResourceReference();
     sourceReference.setResource(URI.create("urn:source-uri"));
-    sourceReference.setId("source-reference-id");
-    sourceReference.setKnownType(ResourceType.Collection);
     sources.add(sourceReference);
     record.setSources(sources);
 
@@ -306,8 +304,6 @@ public class RecordTest {
     ResourceReference sourceReference = record.getSources().get(0);
     assertEquals("urn:source-uri", sourceReference.getResource().toString());
     assertEquals("urn:source-uri", sourceReference.toString());
-    assertEquals("source-reference-id", sourceReference.getId());
-    assertEquals(ResourceType.Collection, sourceReference.getKnownType());
 
     assertEquals("rid", record.getId());
     assertEquals("rid", record.toString());
