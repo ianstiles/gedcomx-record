@@ -80,11 +80,11 @@ public class RecordTest {
     fact.setDate(date);
     datePart = new DatePart();
     datePart.setKnownType(DatePartType.Months);
-    datePart.setOriginal("Jan");
+    datePart.setLiteral("Jan");
     fact.getDate().getParts().add(datePart);
     datePart = new DatePart();
     datePart.setKnownType(DatePartType.Years);
-    datePart.setOriginal("1805");
+    datePart.setLiteral("1805");
     fact.getDate().getParts().add(datePart);
 
     // Add a Place with nothing but parts defined
@@ -93,7 +93,7 @@ public class RecordTest {
     fact.setPlace(place);
     placePart = new PlacePart();
     placePart.setKnownType(PlacePartType.Cemetery);
-    placePart.setOriginal("Orem Cemetery");
+    placePart.setLiteral("Orem Cemetery");
     fact.getPlace().getParts().add(placePart);
 
     facts.add(fact);
@@ -194,7 +194,7 @@ public class RecordTest {
     field.getAttribution().getContributor().setResource(URI.create("urn:" + label + "-attribution"));
     field.setLabel(label + "-field-id");
     field.setId(label + "-id");
-    field.setOriginal(label + "-original");
+    field.setLiteral(label + "-original");
     field.setInterpreted(label + "-interpreted");
     field.setFormal(new FormalValue());
     field.getFormal().setText(label + "-normalized");
@@ -204,7 +204,7 @@ public class RecordTest {
     assertEquals("urn:" + label + "-attribution", field.getAttribution().getContributor().getResource().toString());
     assertEquals(label + "-field-id", field.getLabel());
     assertEquals(label + "-id", field.getId());
-    assertEquals(label + "-original", field.getOriginal());
+    assertEquals(label + "-original", field.getLiteral());
     assertEquals(label + "-interpreted", field.getInterpreted());
     assertEquals(label + "-normalized", field.getFormal().getText());
   }

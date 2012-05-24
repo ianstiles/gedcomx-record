@@ -30,11 +30,11 @@ import javax.xml.bind.annotation.XmlType;
  */
 @JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
 @JsonTypeIdResolver (XmlTypeIdResolver.class)
-@XmlType ( name = "Field", propOrder = { "original", "interpreted", "formal", "source" } )
+@XmlType ( name = "Field", propOrder = {"literal", "interpreted", "formal", "source" } )
 public abstract class Field extends GenealogicalResource {
 
   private String label;
-  private String original;
+  private String literal;
   private String interpreted;
   private FormalValue formal;
   private ResourceReference source;
@@ -65,25 +65,25 @@ public abstract class Field extends GenealogicalResource {
    *
    * @return Text directly extracted from the record field. What you see is what you get, including misspellings and other errors.
    */
-  public String getOriginal() {
-    return original;
+  public String getLiteral() {
+    return literal;
   }
 
   /**
    * Text directly extracted from the record field. What you see is what you get, including misspellings and other errors.
    *
-   * @param original Text directly extracted from the record field. What you see is what you get, including misspellings and other errors.
+   * @param literal Text directly extracted from the record field. What you see is what you get, including misspellings and other errors.
    */
-  public void setOriginal(String original) {
-    this.original = original;
+  public void setLiteral(String literal) {
+    this.literal = literal;
   }
 
   /**
-   * User interpretation of what the {@link #getOriginal() original} value <i>means</i>, used optionally as needed to enhance the original
+   * User interpretation of what the {@link #getLiteral() original} value <i>means</i>, used optionally as needed to enhance the original
    * value by correcting misspellings and other ambiguities. The interpretation is different from a conclusion because it should be made
    * only within the context of the record and not be based on knowledge obtained from other sources.
    *
-   * @return User interpretation of what the {@link #getOriginal() original} value <i>means</i>, used optionally as needed to enhance the original
+   * @return User interpretation of what the {@link #getLiteral() original} value <i>means</i>, used optionally as needed to enhance the original
    * value by correcting misspellings and other ambiguities. The interpretation is different from a conclusion because it should be made
    * only within the context of the record and not be based on knowledge obtained from other sources.
    */
@@ -92,11 +92,11 @@ public abstract class Field extends GenealogicalResource {
   }
 
   /**
-   * User interpretation of what the {@link #getOriginal() original} value <i>means</i>, used optionally as needed to enhance the original
+   * User interpretation of what the {@link #getLiteral() original} value <i>means</i>, used optionally as needed to enhance the original
    * value by correcting misspellings and other ambiguities. The interpretation is different from a conclusion because it should be made
    * only within the context of the record and not be based on knowledge obtained from other sources.
    * 
-   * @param interpreted User interpretation of what the {@link #getOriginal() original} value <i>means</i>, used optionally as needed to enhance the original
+   * @param interpreted User interpretation of what the {@link #getLiteral() original} value <i>means</i>, used optionally as needed to enhance the original
    * value by correcting misspellings and other ambiguities. The interpretation is different from a conclusion because it should be made
    * only within the context of the record and not be based on knowledge obtained from other sources.
    */
@@ -156,8 +156,8 @@ public abstract class Field extends GenealogicalResource {
       s = formal.toString();
     } else if ((interpreted != null) && (! interpreted.isEmpty())) {
       s = interpreted;
-    } else if ((original != null) && (! original.isEmpty())) {
-      s = original;
+    } else if ((literal != null) && (! literal.isEmpty())) {
+      s = literal;
     } else {
       s = "";
     }
