@@ -33,12 +33,12 @@ import java.util.List;
  */
 @JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
 @JsonTypeIdResolver (XmlTypeIdResolver.class)
-@XmlType ( name = "Persona", propOrder = { "persistentId", "alternateIds", "gender", "age", "names", "facts" } )
+@XmlType ( name = "Persona", propOrder = { "persistentId", "identifiers", "gender", "age", "names", "facts" } )
 public class Persona extends GenealogicalResource implements PersistentIdentifiable, HasFacts {
 
   private Boolean principal;
   private URI persistentId;
-  private List<AlternateId> alternateIds;
+  private List<Identifier> identifiers;
   private Gender gender;
   private Age age;
   private java.util.List<Name> names;
@@ -64,25 +64,25 @@ public class Persona extends GenealogicalResource implements PersistentIdentifia
   }
 
   /**
-   * The list of alternate ids of the persona.
+   * The list of identifiers of the persona.
    *
-   * @return The list of alternate ids of the persona.
+   * @return The list of identifiers of the persona.
    */
-  @XmlElement (name="alternateId")
-  @JsonProperty ("alternateIds")
-  @JsonName ("alternateIds")
-  public List<AlternateId> getAlternateIds() {
-    return alternateIds;
+  @XmlElement (name="identifier")
+  @JsonProperty ("identifiers")
+  @JsonName ("identifiers")
+  public List<Identifier> getIdentifiers() {
+    return identifiers;
   }
 
   /**
-   * The list of alternate ids of the persona.
+   * The list of identifiers of the persona.
    *
-   * @param alternateIds The list of alternate ids of the persona.
+   * @param identifiers The list of identifiers of the persona.
    */
-  @JsonProperty ("alternateIds")
-  public void setAlternateIds(List<AlternateId> alternateIds) {
-    this.alternateIds = alternateIds;
+  @JsonProperty ("identifiers")
+  public void setIdentifiers(List<Identifier> identifiers) {
+    this.identifiers = identifiers;
   }
 
   /**

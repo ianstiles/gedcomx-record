@@ -15,7 +15,7 @@
  */
 package org.gedcomx.record;
 
-import org.gedcomx.common.AlternateId;
+import org.gedcomx.common.Identifier;
 import org.gedcomx.rt.CommonModels;
 import org.gedcomx.rt.RDFDomain;
 import org.gedcomx.rt.RDFSubPropertyOf;
@@ -49,18 +49,18 @@ public interface PersistentIdentifiable {
   void setPersistentId(URI persistentId);
 
   /**
-   * List of alternate identifiers for a resource.
+   * List of identifiers for a resource.
    *
-   * @return List of alternate identifiers for a resource.
+   * @return List of identifiers for a resource.
    */
-  @RDFDomain({}) //any resource can have alternate ids.
+  @RDFDomain({}) //any resource can have identifiers.
   @RDFSubPropertyOf( CommonModels.DUBLIN_CORE_NAMESPACE + "identifier" )
-  List<AlternateId> getAlternateIds();
+  List<Identifier> getIdentifiers();
 
   /**
-   * The list of alternate ids of the entity.
+   * The list of identifiers of the entity.
    *
-   * @param alternateIds The list of alternate ids of the entity.
+   * @param identifiers The list of identifiers of the entity.
    */
-  void setAlternateIds(List<AlternateId> alternateIds);
+  void setIdentifiers(List<Identifier> identifiers);
 }

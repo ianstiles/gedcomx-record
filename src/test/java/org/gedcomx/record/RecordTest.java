@@ -1,7 +1,7 @@
 package org.gedcomx.record;
 
 import org.gedcomx.common.Attribution;
-import org.gedcomx.common.AlternateId;
+import org.gedcomx.common.Identifier;
 import org.gedcomx.common.FormalValue;
 import org.gedcomx.common.ResourceReference;
 import org.gedcomx.types.*;
@@ -44,12 +44,12 @@ public class RecordTest {
   private Record createTestRecord() {
     Record record = new Record();
 
-    ArrayList<AlternateId> alternateIds = new ArrayList<AlternateId>();
-    AlternateId alternateId = new AlternateId();
-    alternateId.setKnownType(AlternateIdType.Forwarded);
-    alternateId.setValue("forward-value");
-    alternateIds.add(alternateId);
-    record.setAlternateIds(alternateIds);
+    ArrayList<Identifier> identifiers = new ArrayList<Identifier>();
+    Identifier identifier = new Identifier();
+    identifier.setKnownType(IdentifierType.Forwarded);
+    identifier.setValue("forward-value");
+    identifiers.add(identifier);
+    record.setIdentifiers(identifiers);
 
     List<Fact> facts = new ArrayList<Fact>();
     Fact fact = new Fact();
@@ -132,7 +132,7 @@ public class RecordTest {
     age.setParts(ageParts);
     persona.setAge(age);
 
-    persona.setAlternateIds(alternateIds);
+    persona.setIdentifiers(identifiers);
     persona.setAttribution(new Attribution());
     persona.getAttribution().setProofStatement("this persona exists.");
 
@@ -210,9 +210,9 @@ public class RecordTest {
   }
 
   private void assertTestRecord(Record record) {
-    assertEquals(1, record.getAlternateIds().size());
-    assertEquals(AlternateIdType.Forwarded, record.getAlternateIds().get(0).getKnownType());
-    assertEquals("forward-value", record.getAlternateIds().get(0).getValue());
+    assertEquals(1, record.getIdentifiers().size());
+    assertEquals(IdentifierType.Forwarded, record.getIdentifiers().get(0).getKnownType());
+    assertEquals("forward-value", record.getIdentifiers().get(0).getValue());
 
     assertEquals(2, record.getFacts().size());
     Fact fact = record.getFacts().get(0);
@@ -263,10 +263,10 @@ public class RecordTest {
     assertEquals(AgePartType.Days, agePart.getKnownType());
     assertEquals("age-part-normalized", agePart.toString());
 
-    assertEquals(1, persona.getAlternateIds().size());
-    assertEquals(AlternateIdType.Forwarded, persona.getAlternateIds().get(0).getKnownType());
-    assertEquals("forward-value", persona.getAlternateIds().get(0).getValue());
-    assertEquals("forward-value", persona.getAlternateIds().get(0).toString());
+    assertEquals(1, persona.getIdentifiers().size());
+    assertEquals(IdentifierType.Forwarded, persona.getIdentifiers().get(0).getKnownType());
+    assertEquals("forward-value", persona.getIdentifiers().get(0).getValue());
+    assertEquals("forward-value", persona.getIdentifiers().get(0).toString());
 
     assertEquals("this persona exists.", persona.getAttribution().getProofStatement());
 

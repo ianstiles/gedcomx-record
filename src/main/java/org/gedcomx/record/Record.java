@@ -36,12 +36,12 @@ import java.util.List;
 @JsonElementWrapper ( name = "records" )
 @JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
 @JsonTypeIdResolver (XmlTypeIdResolver.class)
-@XmlType ( name = "Record", propOrder = { "persistentId", "alternateIds", "sources", "type", "personas", "relationships", "facts" } )
+@XmlType ( name = "Record", propOrder = { "persistentId", "identifiers", "sources", "type", "personas", "relationships", "facts" } )
 public class Record extends GenealogicalResource implements PersistentIdentifiable, HasFacts {
 
   private String lang;
   private URI persistentId;
-  private List<AlternateId> alternateIds;
+  private List<Identifier> identifiers;
   private List<ResourceReference> sources;
   @XmlElement (namespace = CommonModels.RDF_NAMESPACE)
   @JsonProperty
@@ -70,25 +70,25 @@ public class Record extends GenealogicalResource implements PersistentIdentifiab
   }
 
   /**
-   * The list of alternate ids of the record.
+   * The list of identifiers of the record.
    *
-   * @return The list of alternate ids of the record.
+   * @return The list of identifiers of the record.
    */
-  @XmlElement (name="alternateId")
-  @JsonProperty ("alternateIds")
-  @JsonName ("alternateIds")
-  public List<AlternateId> getAlternateIds() {
-    return alternateIds;
+  @XmlElement (name="identifier")
+  @JsonProperty ("identifiers")
+  @JsonName ("identifiers")
+  public List<Identifier> getIdentifiers() {
+    return identifiers;
   }
 
   /**
-   * The list of alternate ids of the record.
+   * The list of identifiers of the record.
    *
-   * @param alternateIds The list of alternate ids of the record.
+   * @param identifiers The list of identifiers of the record.
    */
-  @JsonProperty ("alternateIds")
-  public void setAlternateIds(List<AlternateId> alternateIds) {
-    this.alternateIds = alternateIds;
+  @JsonProperty ("identifiers")
+  public void setIdentifiers(List<Identifier> identifiers) {
+    this.identifiers = identifiers;
   }
 
   /**
