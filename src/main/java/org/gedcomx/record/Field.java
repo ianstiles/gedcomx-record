@@ -15,28 +15,29 @@
  */
 package org.gedcomx.record;
 
+import org.codehaus.enunciate.json.JsonName;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.map.annotate.JsonTypeIdResolver;
 import org.gedcomx.common.GenealogicalResource;
-import org.gedcomx.common.FormalValue;
 import org.gedcomx.common.ResourceReference;
 import org.gedcomx.rt.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
 /**
  * A field on a record.
  */
 @JsonTypeInfo ( use =JsonTypeInfo.Id.CUSTOM, property = XmlTypeIdResolver.TYPE_PROPERTY_NAME)
 @JsonTypeIdResolver (XmlTypeIdResolver.class)
-@XmlType ( name = "Field", propOrder = {"literal", "interpreted", "formal", "source" } )
+@XmlType ( name = "Field", propOrder = {"fieldValues", "source" } )
 public abstract class Field extends GenealogicalResource {
 
   private String label;
-  private String literal;
-  private String interpreted;
-  private FormalValue formal;
+  private List<FieldValue> fieldValues;
   private ResourceReference source;
 
   /**
@@ -61,65 +62,25 @@ public abstract class Field extends GenealogicalResource {
   }
 
   /**
-   * Text directly extracted from the record field. What you see is what you get, including misspellings and other errors.
+   * The list of field values of the field.
    *
-   * @return Text directly extracted from the record field. What you see is what you get, including misspellings and other errors.
+   * @return The list of field values of the field.
    */
-  public String getLiteral() {
-    return literal;
+  @XmlElement(name="fieldValue")
+  @JsonProperty("fieldValues")
+  @JsonName("fieldValues")
+  public List<FieldValue> getFieldValues() {
+    return fieldValues;
   }
 
   /**
-   * Text directly extracted from the record field. What you see is what you get, including misspellings and other errors.
+   * The list of field values of the field.
    *
-   * @param literal Text directly extracted from the record field. What you see is what you get, including misspellings and other errors.
+   * @param fieldValues The list of field values of the field.
    */
-  public void setLiteral(String literal) {
-    this.literal = literal;
-  }
-
-  /**
-   * User interpretation of what the {@link #getLiteral() original} value <i>means</i>, used optionally as needed to enhance the original
-   * value by correcting misspellings and other ambiguities. The interpretation is different from a conclusion because it should be made
-   * only within the context of the record and not be based on knowledge obtained from other sources.
-   *
-   * @return User interpretation of what the {@link #getLiteral() original} value <i>means</i>, used optionally as needed to enhance the original
-   * value by correcting misspellings and other ambiguities. The interpretation is different from a conclusion because it should be made
-   * only within the context of the record and not be based on knowledge obtained from other sources.
-   */
-  public String getInterpreted() {
-    return interpreted;
-  }
-
-  /**
-   * User interpretation of what the {@link #getLiteral() original} value <i>means</i>, used optionally as needed to enhance the original
-   * value by correcting misspellings and other ambiguities. The interpretation is different from a conclusion because it should be made
-   * only within the context of the record and not be based on knowledge obtained from other sources.
-   * 
-   * @param interpreted User interpretation of what the {@link #getLiteral() original} value <i>means</i>, used optionally as needed to enhance the original
-   * value by correcting misspellings and other ambiguities. The interpretation is different from a conclusion because it should be made
-   * only within the context of the record and not be based on knowledge obtained from other sources.
-   */
-  public void setInterpreted(String interpreted) {
-    this.interpreted = interpreted;
-  }
-
-  /**
-   * The discreet, formal value of the field as supplied by a user or applied by an algorithm based on the original and interpreted values.
-   * 
-   * @return The discreet, formal value of the field as supplied by a user or applied by an algorithm based on the original and interpreted values.
-   */
-  public FormalValue getFormal() {
-    return formal;
-  }
-
-  /**
-   * The discreet, formal value of the field as supplied by a user or applied by an algorithm based on the original and interpreted values.
-   * 
-   * @param formal The discreet, formal value of the field as supplied by a user or applied by an algorithm based on the original and interpreted values.
-   */
-  public void setFormal(FormalValue formal) {
-    this.formal = formal;
+  @JsonProperty ("fieldValues")
+  public void setFieldValues(List<FieldValue> fieldValues) {
+    this.fieldValues = fieldValues;
   }
 
   /**
@@ -151,13 +112,9 @@ public abstract class Field extends GenealogicalResource {
   public String toString() {
     String s;
 
-    // Show one of the following values arranged in priority: Processed, Interpreted or Original
-    if ((formal != null) && (! formal.toString().isEmpty())) {
-      s = formal.toString();
-    } else if ((interpreted != null) && (! interpreted.isEmpty())) {
-      s = interpreted;
-    } else if ((literal != null) && (! literal.isEmpty())) {
-      s = literal;
+    // Show one of the following values arranged in priority: last in list.
+    if (fieldValues != null && fieldValues.size() > 0 && (! fieldValues.get(fieldValues.size() - 1).toString().isEmpty())) {
+      s = fieldValues.get(fieldValues.size() - 1).toString();
     } else {
       s = "";
     }

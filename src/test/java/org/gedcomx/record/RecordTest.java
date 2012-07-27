@@ -73,6 +73,9 @@ public class RecordTest {
     facts.add(fact);
 
     // Add a fact with a Date with nothing but parts defined.
+    List<FieldValue> fieldValues;
+    FieldValue fieldValue;
+
     fact = new Fact();
     fact.setKnownType(FactType.Burial);
     Date date = new Date();
@@ -80,11 +83,23 @@ public class RecordTest {
     fact.setDate(date);
     datePart = new DatePart();
     datePart.setKnownType(DatePartType.Months);
-    datePart.setLiteral("Jan");
+
+    fieldValues = new ArrayList<FieldValue>();
+    fieldValue = new FieldValue();
+    fieldValue.setText("Jan");
+    fieldValues.add(fieldValue);
+    datePart.setFieldValues(fieldValues);
+
     fact.getDate().getParts().add(datePart);
     datePart = new DatePart();
     datePart.setKnownType(DatePartType.Years);
-    datePart.setLiteral("1805");
+
+    fieldValues = new ArrayList<FieldValue>();
+    fieldValue = new FieldValue();
+    fieldValue.setText("1805");
+    fieldValues.add(fieldValue);
+    datePart.setFieldValues(fieldValues);
+
     fact.getDate().getParts().add(datePart);
 
     // Add a Place with nothing but parts defined
@@ -93,7 +108,13 @@ public class RecordTest {
     fact.setPlace(place);
     placePart = new PlacePart();
     placePart.setKnownType(PlacePartType.Cemetery);
-    placePart.setLiteral("Orem Cemetery");
+
+    fieldValues = new ArrayList<FieldValue>();
+    fieldValue = new FieldValue();
+    fieldValues.add(fieldValue);
+    placePart.setFieldValues(fieldValues);
+
+    fieldValue.setText("Orem Cemetery");
     fact.getPlace().getParts().add(placePart);
 
     facts.add(fact);
@@ -194,19 +215,25 @@ public class RecordTest {
     field.getAttribution().getContributor().setResource(URI.create("urn:" + label + "-attribution"));
     field.setLabel(label + "-field-id");
     field.setId(label + "-id");
-    field.setLiteral(label + "-original");
-    field.setInterpreted(label + "-interpreted");
-    field.setFormal(new FormalValue());
-    field.getFormal().setText(label + "-normalized");
+
+    List<FieldValue> fieldValues;
+    FieldValue fieldValue;
+    fieldValues = new ArrayList<FieldValue>();
+    fieldValue = new FieldValue();
+    fieldValues.add(fieldValue);
+    field.setFieldValues(fieldValues);
+
+    fieldValue.setText(label + "-original");
+    fieldValue.setFormal(new FormalValue());
+    fieldValue.getFormal().setText(label + "-normalized");
   }
 
   private void assertField(Field field, String label) {
     assertEquals("urn:" + label + "-attribution", field.getAttribution().getContributor().getResource().toString());
     assertEquals(label + "-field-id", field.getLabel());
     assertEquals(label + "-id", field.getId());
-    assertEquals(label + "-original", field.getLiteral());
-    assertEquals(label + "-interpreted", field.getInterpreted());
-    assertEquals(label + "-normalized", field.getFormal().getText());
+    assertEquals(label + "-original", field.getFieldValues().get(0).getText());
+    assertEquals(label + "-normalized", field.getFieldValues().get(0).getFormal().getText());
   }
 
   private void assertTestRecord(Record record) {
